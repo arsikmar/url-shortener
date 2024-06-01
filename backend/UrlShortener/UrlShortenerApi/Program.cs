@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using UrlShortenerApi.Data;
 using UrlShortenerApi.Extensions;
@@ -9,6 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDatabaseContext(builder.Configuration);
+builder.Services.AddScoped<UrlShorteningService>();
 
 var app = builder.Build();
 
@@ -29,9 +31,13 @@ app.MapGet("{code}", async (string code, ApplicationDbContext context) =>
 })
 .WithOpenApi();
 
-app.MapPost("/", async (string url, ApplicationDbContext context, UrlShorteningService urlShorteningService) =>
+app.MapPost("/", async (
+    [FromBody] ShortenedUrlRequest request, 
+    ApplicationDbContext dbContext, 
+    UrlShorteningService urlShorteningService,
+    HttpContext httpContext) =>
 {
-    var isUrlValid = Uri.TryCreate(url, UriKind.Absolute, out var uriResult) && 
+    var isUrlValid = Uri.TryCreate(request.Url, UriKind.Absolute, out var uriResult) && 
         (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps);
     if (!isUrlValid) return Results.BadRequest("Invalid URL");
 
@@ -40,13 +46,13 @@ app.MapPost("/", async (string url, ApplicationDbContext context, UrlShorteningS
     var shortenedUrl = new ShortenedUrl()
     {
         Code = code,
-        BaseUrl = url,
-        ShortUrl = $"domain/{code}",
+        BaseUrl = request.Url,
+        ShortUrl = $"{httpContext.Request.Scheme}://{httpContext.Request.Host}/{code}",
         CreatedOnUtc = DateTime.UtcNow
     };
 
-    context.ShortenedUrls.Add(shortenedUrl);
-    await context.SaveChangesAsync();
+    dbContext.ShortenedUrls.Add(shortenedUrl);
+    await dbContext.SaveChangesAsync();
 
     return Results.Ok(shortenedUrl.ShortUrl);
 })
