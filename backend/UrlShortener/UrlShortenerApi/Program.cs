@@ -15,7 +15,7 @@ builder.Services.AddDatabaseContext(builder.Configuration);
 builder.Services.AddScoped<UrlShorteningService>();
 builder.Services.AddStackExchangeRedisCache(options => {
     options.Configuration = "localhost";
-    options.InstanceName = "local";
+    options.InstanceName = "s-url";
 });
 
 var app = builder.Build();
