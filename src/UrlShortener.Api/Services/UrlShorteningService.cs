@@ -19,7 +19,7 @@ namespace UrlShortenerApi.Services
         }
 
         public async Task<ShortenedUrl> GenerateShortenedUrlAsync(string url)
-        {
+        {         
             var code = await GenerateUniqueCode();
 
             var shortenedUrl = new ShortenedUrl()

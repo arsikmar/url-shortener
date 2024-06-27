@@ -17,6 +17,7 @@ builder.Services.AddStackExchangeRedisCache(options => {
     options.Configuration = builder.Configuration.GetConnectionString("RedisConnection");
     options.InstanceName = "s-url-";
 });
+builder.Services.AddCors();
 
 var app = builder.Build();
 
@@ -28,6 +29,11 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseCors(builder => builder
+    .AllowAnyOrigin()
+    .AllowAnyHeader()
+    .AllowAnyMethod());
+
 app.MapGet("{code}", async Task<IResult> (
     string code,
     DatabaseService databaseService,
@@ -36,7 +42,7 @@ app.MapGet("{code}", async Task<IResult> (
     var cachedUrl = await cacheService.GetCachedUrlAsync(code);
     if (cachedUrl != null) return Results.Redirect(cachedUrl.BaseUrl);
 
-    var shortenedUrl = await databaseService.GetUrlFromDatabaseAsync(code);
+    var shortenedUrl = await databaseService.GetShortenedUrlByCodeAsync(code);
     if (shortenedUrl == null) return Results.NotFound();
 
     await cacheService.SetCacheAsync(shortenedUrl);
@@ -54,8 +60,13 @@ app.MapPost("/", async (
         (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps);
     if (!isUrlValid) return Results.BadRequest("Invalid URL");
 
+    if (request.Url[request.Url.Length - 1] == '/') request.Url = request.Url.Remove(request.Url.Length - 1);
+
+    var dbUrl = await databaseService.GetShortenedUrlByBaseUrlAsync(request.Url);
+    if (dbUrl != null) return Results.Ok(dbUrl.ShortUrl);
+
     var shortenedUrl = await urlShorteningService.GenerateShortenedUrlAsync(request.Url);
-    await databaseService.AddUrlToDatabaseAsync(shortenedUrl);
+    await databaseService.AddShortenedUrlAsync(shortenedUrl);
     await cacheService.SetCacheAsync(shortenedUrl);
 
     return Results.Ok(shortenedUrl.ShortUrl);

@@ -13,15 +13,20 @@ namespace UrlShortenerApi.Services
             _context = context;
         }
 
-        public async Task AddUrlToDatabaseAsync(ShortenedUrl shortenedUrl)
+        public async Task AddShortenedUrlAsync(ShortenedUrl shortenedUrl)
         {
             _context.ShortenedUrls.Add(shortenedUrl);
             await _context.SaveChangesAsync();
         }
 
-        public async Task<ShortenedUrl?> GetUrlFromDatabaseAsync(string code)
+        public async Task<ShortenedUrl?> GetShortenedUrlByCodeAsync(string code)
         {
             return await _context.ShortenedUrls.FirstOrDefaultAsync(u => u.Code == code);
+        }
+
+        public async Task<ShortenedUrl?> GetShortenedUrlByBaseUrlAsync(string url)
+        {
+            return await _context.ShortenedUrls.FirstOrDefaultAsync(u => u.BaseUrl == url);
         }
     }
 }
