@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using UrlShortenerApi.Extensions;
 using UrlShortenerApi.Models;
 using UrlShortenerApi.Services;
@@ -8,13 +7,13 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddDatabaseContext(builder.Configuration);
+builder.Services.AddDatabaseContext();
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddScoped<UrlShorteningService>();
 builder.Services.AddScoped<DatabaseService>();
 builder.Services.AddScoped<CacheService>();
 builder.Services.AddStackExchangeRedisCache(options => {
-    options.Configuration = builder.Configuration.GetConnectionString("RedisConnection");
+    options.Configuration = Environment.GetEnvironmentVariable("RedisConnection");
     options.InstanceName = "s-url-";
 });
 builder.Services.AddCors();

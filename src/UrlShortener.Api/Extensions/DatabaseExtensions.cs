@@ -5,10 +5,10 @@ namespace UrlShortenerApi.Extensions
 {
     public static class DatabaseExtensions
     {
-        public static IServiceCollection AddDatabaseContext(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddDatabaseContext(this IServiceCollection services)
         {
             return services.AddDbContext<ApplicationDbContext>(options => options
-                .UseNpgsql(configuration.GetConnectionString("PostgreSqlConnection"))
+                .UseNpgsql(Environment.GetEnvironmentVariable("PostgreSqlConnection"))
                 .UseSnakeCaseNamingConvention());
         }
     }
