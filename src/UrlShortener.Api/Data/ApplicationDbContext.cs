@@ -7,7 +7,7 @@ namespace UrlShortenerApi.Data
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
-            Database.EnsureCreated();
+
         }
 
         public DbSet<ShortenedUrl> ShortenedUrls { get; set; }

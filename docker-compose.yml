@@ -11,6 +11,7 @@ services:
     environment:
       PostgreSqlConnection: Server=postgres-db;Port=5432;Database=url-shortener;User Id=postgres;Password=postgres
       RedisConnection: redis-cache
+    command: ["dotnet", "ef", "database update"]
 
   postgres-db:
     image: postgres
