@@ -12,9 +12,13 @@
     <title>Url Shortener</title>
 </head>
 <body>
-    <header class="flex center">
-        <p>Url Shortener</p>
-        <div class="fade_animation"></div>
+    <header class="flex center bg_white m-auto">
+        <div class="header_content">
+            <p>Url Shortener</p>
+            <div class="fade_animation"></div>
+            <!-- <div class="left_deco"></div>
+            <div class="right_deco"></div> -->
+        </div>
     </header>
     <div class="form_box flex center">
         <form class="flex">
@@ -41,7 +45,7 @@
                 </g>
             </svg>
         <div id="short_url" class="short_url flex center d-none">
-            <input id="shortened_url" class="form_text" type="text" size=30 value="hui">
+            <input id="shortened_url" class="form_text" type="text" size=30>
             <button onclick="copy_url()">
                 <?xml version="1.0" encoding="UTF-8"?>
                 <svg id="svg" fill="#fff" stroke="#000000" width="30px" height="30px" version="1.1" viewBox="144 144 512 512" xmlns="http://www.w3.org/2000/svg">
