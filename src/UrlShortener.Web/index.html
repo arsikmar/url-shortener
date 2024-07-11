@@ -1,0 +1,66 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="style.css">
+
+    <title>Url Shortener</title>
+</head>
+<body>
+    <header class="flex center">
+        <p>Url Shortener</p>
+        <div class="fade_animation"></div>
+    </header>
+    <div class="form_box flex center">
+        <form class="flex">
+            <input id="form_text" class="form_text" type="text" size=50 name="url" required>
+            <input class="form_button" type="button" name="button" value="Submit" onclick="submit_url()">
+        </form>
+    </div>
+    <div>
+        <?xml version="1.0" encoding="UTF-8"?>
+            <svg class="loading_svg d-none" id="load_svg" fill="#000000" stroke="#000000" width="100px" height="100px" version="1.1" viewBox="144 144 512 512" xmlns="http://www.w3.org/2000/svg">
+                    <g id="IconSvg_bgCarrier" stroke-width="0"></g>
+                    <g id="IconSvg_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC"></g>
+                    <g id="IconSvg_iconCarrier">
+                    <g xmlns="http://www.w3.org/2000/svg">
+                        <path d="m400 321.34c-17.367 0-31.488-14.121-31.488-31.488v-94.527c0-17.367 14.121-31.488 31.488-31.488s31.488 14.121 31.488 31.488v94.527c0 17.352-14.125 31.488-31.488 31.488z"/>
+                        <path d="m400 636.16c-17.367 0-31.488-14.121-31.488-31.488v-94.527c0-17.367 14.121-31.488 31.488-31.488s31.488 14.121 31.488 31.488v94.527c0 17.363-14.125 31.488-31.488 31.488z"/>
+                        <path d="m510.14 431.49c-17.367 0-31.488-14.121-31.488-31.488s14.121-31.488 31.488-31.488h94.527c17.367 0 31.488 14.121 31.488 31.488s-14.121 31.488-31.488 31.488z"/>
+                        <path d="m195.32 431.49c-17.367 0-31.488-14.121-31.488-31.488s14.121-31.488 31.488-31.488h94.527c17.367 0 31.488 14.121 31.488 31.488s-14.121 31.488-31.488 31.488z"/>
+                        <path d="m477.88 353.62c-8.4062 0-16.312-3.2734-22.262-9.2266-12.281-12.266-12.281-32.258 0-44.523l66.848-66.848c5.9531-5.9531 13.855-9.2266 22.262-9.2266s16.312 3.2734 22.262 9.2266c12.281 12.266 12.281 32.258 0 44.523l-66.848 66.848c-5.9492 5.9492-13.852 9.2266-22.262 9.2266z"/>
+                        <path d="m255.28 576.21c-8.4062 0-16.312-3.2734-22.262-9.2266-12.281-12.266-12.281-32.258 0-44.523l66.848-66.848c5.9531-5.9531 13.855-9.2266 22.262-9.2266s16.312 3.2734 22.262 9.2266c12.281 12.266 12.281 32.258 0 44.523l-66.848 66.848c-5.9492 5.9492-13.852 9.2266-22.262 9.2266z"/>
+                        <path d="m544.72 576.21c-8.4062 0-16.312-3.2734-22.262-9.2266l-66.848-66.848c-12.281-12.266-12.281-32.258 0-44.523 5.9531-5.9531 13.855-9.2266 22.262-9.2266s16.312 3.2734 22.262 9.2266l66.848 66.848c12.281 12.266 12.281 32.258 0 44.523-5.9375 5.9492-13.84 9.2266-22.262 9.2266z"/>
+                        <path d="m322.11 353.62c-8.4062 0-16.312-3.2734-22.262-9.2266l-66.836-66.848c-12.281-12.266-12.281-32.258 0-44.523 5.9531-5.9531 13.855-9.2266 22.262-9.2266s16.312 3.2734 22.262 9.2266l66.848 66.848c12.281 12.266 12.281 32.258 0 44.523-5.9648 5.9492-13.867 9.2266-22.273 9.2266z"/>
+                    </g>
+                </g>
+            </svg>
+        <div id="short_url" class="short_url flex center d-none">
+            <input id="shotrened_url" class="form_text" type="text" size=30 value="hui">
+            <button>
+                <?xml version="1.0" encoding="UTF-8"?>
+                <svg id="svg" fill="#fff" stroke="#000000" width="30px" height="30px" version="1.1" viewBox="144 144 512 512" xmlns="http://www.w3.org/2000/svg">
+                    <g id="IconSvg_bgCarrier" stroke-width="0"></g>
+                    <g id="IconSvg_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC"></g>
+                    <g id="IconSvg_iconCarrier">
+                        <defs xmlns="http://www.w3.org/2000/svg">
+                            <clipPath id="a">
+                                <path d="m189 155h414v496.9h-414z"/>
+                            </clipPath>
+                        </defs>
+                        <g xmlns="http://www.w3.org/2000/svg" clip-path="url(#a)">
+                            <path d="m596.87 246.69-84.926-84.926c-3.9336-3.9336-8.7188-5.9141-14.281-5.9141h-193.76c-17.781 0-32.258 14.477-32.258 32.258v363.33c0 17.707 14.547 32.258 32.258 32.258h266.62c17.773 0 32.258-14.48 32.258-32.258v-290.46c0-5.5625-1.9805-10.352-5.9141-14.281zm-103.2 372.96c0 2.9297-2.3945 5.3242-5.3242 5.3242h-266.62c-2.9414 0-5.3242-2.3828-5.3242-5.3242v-363.32c0-2.9297 2.3984-5.3242 5.3242-5.3242h17.949c3.4219 0 6.1953-2.7734 6.1953-6.1953v-14.543c0-3.4219-2.7734-6.1953-6.1953-6.1953h-17.949c-17.812 0-32.258 14.441-32.258 32.258v363.33c0 17.742 14.516 32.258 32.258 32.258h266.62c17.742 0 32.258-14.516 32.258-32.258v-6.1797c0-3.0469-2.4727-5.5156-5.5156-5.5156h-15.906c-3.043 0-5.5156 2.4648-5.5156 5.5156v6.1797zm82.188-68.219m0 0c0 2.918-2.4062 5.3242-5.3242 5.3242h-266.62c-2.9922 0-5.3242-2.3398-5.3242-5.3242v-363.32c0-2.918 2.4062-5.3242 5.3242-5.3242h189.61v53.949c0 15.637 12.75 28.391 28.383 28.391h53.953v286.32z"/>
+                        </g>
+                    </g>
+                </svg>
+            </button>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
